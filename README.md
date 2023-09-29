@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center">
 <img src="https://github.com/kura-labs-org/kuralabs_deployment_1/blob/main/Kuralogo.png">
 </p>
@@ -24,3 +25,6 @@ Demonstrate your ability to deploy an application to an EC2 instance.
 
 ## Deployment instructions Link:
 -  Link to instructions: https://github.com/kura-labs-org/c4_deployment-4/blob/main/Deployment-instructions.md
+=======
+# Deployment4
+>>>>>>> 53820c40fe46ff461e79aae9fd436891ffcc54e6
