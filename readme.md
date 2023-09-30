@@ -181,6 +181,8 @@ Step 12: You should be at this path in the instance still: **/opt/aws/amazon-clo
 	Run command **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json** to process the amazon cloudwatch agent
 	Check to see if it is running: **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status**
 
+  
+  
 
 Step 13:  Create staging environment in Jenkins:
 
@@ -232,6 +234,10 @@ Step 17: Go to **security group** created for the instance --> Add Port 5000 and
 
 The web application should be available now 
 
+
+
+
+
 Step 18: Configure CloudWatch alarm & email notifications: 
 
 To create an alarm using the Amazon EC2 console
@@ -254,17 +260,25 @@ For Alarm thresholds, select the metric and criteria for the alarm. For example,
 Choose Create.
 
 
+Go to **Metrics** tab --> **CWAgent** (installed on instance) --> Select **cpu metrics** or any other metric you want to look at --> You should see the metrics displayed in a visual format at the top --> You can change the type of visual by choosing an option under *****
 
-Go to **Metrics** tab --> **CWAgent** (installed on instance) --> Select **cpu metrics** or any other metric you want to query information on --> **Query** --> 
+To create email notifications for Alarm:
 
-CPU usage: analyze
-**watch nicole video over to make emails and how to look at the graph in the alarm***
+After creating visuals on the cpu_usage_user metric, I wanted to be notified when the cpu usage hits a certain percentage. 
+
+Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm**
+Go back to **Metrics** then **CWAgent** --> Click instance you want alarms for --> Go to **Select Metrics** --> Information should be filled out for the most part --> Modify **Statistic** and **Period** for what metric you want to be notified about and the period time that the metric is being measured --> 
+
+	Under **COnditions**, select when conditions that the instance needs to meet in order for you to recieve a notification. I selected **Anomaly detection**, and selected **greater/equal** to 75% (bc i want to know before cpu usage hits an abnormal percentage and 75% is already high. This can help with early detection if there is an issue with functionality of my EC2 instance. --> Press **Next**
+
+	Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
+
+auto scale or create ec2 actions so that in case certain metrics reach a specifiec threshold in the alarm, the instance can perform an action to intervene with any issues that may occur
+
+Do a stress test in the terminal by installing: sudo apt install stress -ng. This command helps test the functionality by directing simulated traffic to the instance and seeing if it can handle it, as well as, test if my alarm is working.
+ 	Then run: **sudo stress-ng --matrix 1 -t 1m** to test the durability of the instance that is hosting applications needed for my deployment. This command does a 1 minute test but you can change the amount of time as needed. Since I have already configured an alarm for this instance, I recieved an email notification that my alarm was in **'in Alarm'**. This would prompt me to go to my instance and check on its processes and see if there are any configurations that need tobe done to ensure the proper functionality of my deployment. 
 
 
-
-Add email address to get notification of when CloudWatch alarm is triggered
-
-Run a build through Jenkins supported by the instance. 
 
 Recieved email and easily accessed alarm metrics since we added it to the Dashboard
 
@@ -272,6 +286,6 @@ Check CPU usage again.
 
 
 
-*After running the first build and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance becuase my usual t2.micro instance would not have been able to handle all the installations we did on it. For long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
+*After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance becuase my usual t2.micro instance would not have been able to handle all the installations we did on it. For long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
 	
 	
