@@ -294,34 +294,20 @@ The web application should be available now
 
 #### Step 10: Configure CloudWatch alarm & email notifications: 
 
-To create an alarm using the Amazon EC2 console
+</ins> To create an alarm using the Amazon EC2 console: </ins>
+  
 
-In the navigation pane, choose Instances.
+Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance you want alarms for --> Information should be filled out for the most part --> Modify **Statistic** and **Period** for what metric you want to be notified about and the period time that the metric is being measured --> Press **Select Metrics**
 
-Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms.
-
-On the Manage CloudWatch alarms detail page, under Add or edit alarm, select Create an alarm.
-
-For Alarm notification, choose whether to turn the toggle on or off to configure Amazon Simple Notification Service (Amazon SNS) notifications. Enter an existing Amazon SNS topic or enter a name to create a new topic.
-
-For Alarm action, choose whether to turn the toggle on or off to specify an action to take when the alarm is triggered. Select an action from the dropdown.
-
-For Alarm thresholds, select the metric and criteria for the alarm. For example, you can leave the default settings for Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes.
-
-(Optional) For Sample metric data, choose Add to dashboard.
-
-Choose Create.
-
-vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  
-
-Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm**
-Go back to **Metrics** then **CWAgent** --> Click instance you want alarms for --> Go to **Select Metrics** --> Information should be filled out for the most part --> Modify **Statistic** and **Period** for what metric you want to be notified about and the period time that the metric is being measured --> 
-
-	Under **COnditions**, select when conditions that the instance needs to meet in order for you to recieve a notification. I selected **Anomaly detection**, and selected **greater/equal** to 75% (bc i want to know before cpu usage hits an abnormal percentage and 75% is already high. This can help with early detection if there is an issue with functionality of my EC2 instance. --> Press **Next**
+	Under **COnditions**, select when conditions that the instance needs to meet in order for you to recieve a notification 
+ 
+ 	For Alarm thresholds, select the metric and criteria for the alarm. For example, you can leave the default settings for Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes --> Press **Next**
 
 	Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
 
 *For the future, you can auto scale or create ec2 actions so that in case certain metrics reach a specifiec threshold in the alarm, the instance can perform an action to intervene with any issues that may occur*
+
+	Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms. --> Select alarm 
 
 []@()
 	Do a stress test in the terminal by installing: **sudo apt install stress -ng** [This command helps test the functionality by directing simulated 	trafic to the instance and seeing if it can handle it, as well as, test if my alarm is working.]
