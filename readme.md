@@ -7,7 +7,9 @@ ______________________________________
 ___________________
 &emsp;&emsp;&emsp;&emsp;
 
-
+### <ins>ISSUES:</ins>
+___________________
+&emsp;&emsp;&emsp;&emsp;
 
 
 
@@ -320,7 +322,9 @@ Check CPU usage again.
 
 []!()
 
-
+### <ins>OPTIMIZATION:</ins>
+___________________
+&emsp;&emsp;&emsp;&emsp;
 
 *After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance becuase my usual t2.micro instance would not have been able to handle all the installations we did on it. For long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
 	
