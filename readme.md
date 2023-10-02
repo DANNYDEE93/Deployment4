@@ -1,7 +1,7 @@
-## <ins>Deployment 3: AWS ElasticBeanstalk CLI Instance Virtual Environment</ins>
+## <ins>Deployment 4: Using AWS for VPC & EC2 instance for Jenkins Staging & Nginx Production </ins>
 _________________________________________________
 ##### Danielle Davis
-##### September 17, 2023
+##### October 2, 2023
 ______________________________________
 ### <ins>PURPOSE:</ins>
 ___________________
