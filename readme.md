@@ -149,7 +149,7 @@ Step 5:	Install Jenkins 2.4.01 along with "Pipeline Keep Running Step" 	plugin,
 ___________________________________________________________________
 
 
-Step 6:	Nginx 
+##### Step 6: Install Nginx, a reverse proxy server to act as a web server to deploy application 
 
 **sudo apt update**
 
