@@ -2,6 +2,7 @@
 
 Step 1: Create VPC in AWS to preconfigure route table and internet gateway
 
+	Go to VPC in AWS -->
 	**diagram**
 
 Step 2: Git code through remote repository through VS code and then commit and push changes to 	the local repository on Github.
@@ -60,7 +61,14 @@ python3 -m gunicorn -w 4 application:app -b 0.0.0.0 --daemon
 }
 }
 
+
+Step ** git code steps 
+
+
 	**git commit timeline diagram*
+
+
+ 
 
 Step 3: Launch instance with t2 medium capacity 
 	Connect to new VPC created through Network Settings 
@@ -99,7 +107,12 @@ If you have previous installed packages for Jenkins, you will need to remove any
 
 **sudo apt update**
 
-Step 6:	Nginx edit the configuration file and **cd** into default file through the following 	path: 	"/etc/nginx/sites-enabled/default"
+Step 6:	Nginx 
+
+sudo apt-get install nginx
+sudo systemctl start nginx service
+
+edit the configuration file and **cd** into default file through the following 	path: 	"/etc/nginx/sites-enabled/default"
 
 ###First change the port from 80 to 5000, see below:
 server {
@@ -193,7 +206,7 @@ Step 13:  Create staging environment in Jenkins:
 	Go to **Manage Jenkins** in the Jenkins Dashboard, navigate to **Plugins** --> **Available plugins** --> Search and install **Pipeline Keep Running Step** plugin. This plugin allows me to define my script so its easier to see when the build is running properly or has been triggered. It's also easier to keep record and check historical changes in the functionality of an application. 
 
 
-Step 14:  Start the multibranch project on the Jenkins web browser to test the application in the GitHub repository.
+Step 14:  Start the multibranch pipeline on the Jenkins web browser to test the application in the GitHub repository.
 
 	Go to **New Item** on the Dashboard --> Name project --> Select **Multibranch pipeline** --> Fill in display name --> Go to **Branch Sources** --> Select **Git** --> Under **Credentials** --> Add **Jenkins**
 
