@@ -302,11 +302,11 @@ The web application should be available now
 
 Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance you want alarms for --> Information should be filled out for the most part --> Modify **Statistic** and **Period** for what metric you want to be notified about and the period time that the metric is being measured --> Press **Select Metrics**
 
-	Under **Conditions**, select when conditions that the instance needs to meet in order for you to recieve a notification 
+Under **Conditions**, select when conditions that the instance needs to meet in order for you to recieve a notification 
  
- 	For Alarm thresholds, select the metric and criteria for the alarm. You can leave the default settings for selections or  Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes --> Press **Next**
+ 	For Alarm thresholds, select the metric and criteria for the alarm. You can leave the default settings for selections or customize   Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes --> Press **Next**
 
-	Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
+Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchconfig.jpg)
@@ -314,20 +314,25 @@ Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance yo
 
 *For the future, you can auto scale or create ec2 actions so that in case certain metrics reach a specifiec threshold in the alarm, the instance can perform an action to intervene with any issues that may occur*
 
-	Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms. --> Select alarm 
-
-![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
+Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms. --> Select alarm 
 
  
- 	Do a stress test in the terminal by installing: **sudo apt install stress -ng** [This command helps test the functionality by directing simulated 	trafic to the instance and seeing if it can handle it, as well as, test if my alarm is working.]
+Do a stress test in the terminal by installing: **sudo apt install stress -ng** [This command helps test the functionality by directing simulated 	trafic to the instance and seeing if it can handle it, as well as, test if my alarm is working.]
  	
-  	Then run: **sudo stress-ng --matrix 1 -t 1m** [to test the durability of the instance that is hosting applications needed for my deployment] This command does a 1 minute test but you can change the amount of time as needed. Since I have already configured an alarm for this instance, I recieved an email notification that it was in a state of **'in Alarm'**. This would prompt me to go to my instance and check on its processes and see if there are any configurations that need tobe done to ensure the proper functionality of my deployment. 
+  Then run: **sudo stress-ng --matrix 1 -t 1m** [to test the durability of the instance that is hosting applications needed for my deployment] This command does a 1 minute test but you can change the amount of time as needed. Since I have already configured an alarm for this instance, I recieved an email notification that it was in a state of **'in Alarm'**. This would prompt me to go to my instance and check on its processes and see if there are any configurations that need tobe done to ensure the proper functionality of my deployment. 
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
 
 
 Recieved email and easily accessed alarm metrics since we added it to the Dashboard
+
+
+### <ins>SYSTEM DIAGRAM:</ins>
+
+
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/deployment4Diagram.jpg)
+
 
 
 ### <ins>OPTIMIZATION:</ins>
