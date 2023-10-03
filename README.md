@@ -9,15 +9,11 @@ ___________________
 
 ### <ins>ISSUES:</ins>
 ___________________
-&emsp;&emsp;&emsp;&emsp;
+&emsp;&emsp;&emsp;&emsp;		
 
 
 
-### <ins> **SYSTEM DIAGRAM** </ins>
-__________________________________________________________
-
-<ins> ***Diagram the plan for deployment on Draw.io:*** </ins>
-
+### <ins> **STEPS FOR WEB APPLICATION DEPLOYMENT** </ins>
 
 _____________________________________________________________________________
 Step 1: Create VPC in AWS:
@@ -26,12 +22,13 @@ Step 1: Create VPC in AWS:
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
 
 ______________________________________________________________________________
-Step 2: Use git code through remote repository through VS code and then commit and push changes to 	the local repository on Github.
+Step 2: Use git code through remote repository through VS code by creating a second branch to make changes in the Jenkinsfile from before then adding, committing, and pushing those changes to my local repository on Github.
+
 	
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
 _______________________________________________________________________
 
-	Uptdate Jenkinsfile with following script to include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependecies for  Gunicorn with the Flask application to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
+	Below are important additions that I changed in the Jenkinsfile to include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependecies for  Gunicorn with the Flask application to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
 
 _______________________________________________________________________________________-
 
@@ -80,6 +77,8 @@ pip install gunicorn
 python3 -m gunicorn -w 4 application:app -b 0.0.0.0 --daemon
 '''
 _______________________________________________________________________
+
+
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
 
@@ -220,7 +219,7 @@ ________________________________________________________________________________
 *For the conditions of CloudWatch agent, I chose:* 
 
 Linux --> EC2 --> root user --> 
-**Select** No for 'StatsD daemon' and 'CollectD' [they are monitoring processing tools but we dont need them because we're going to use Cloudwatch] --> 
+**Select** No for 'StatsD daemon' and 'CollectD' [monitoring processing tools] --> 
 
 **Yes** to monitor host metrics such as CPU and memory --> 
 
@@ -238,14 +237,13 @@ Select **No** to having any existing CloudWatch Log Agent -->
 
 Select **Yes** to monitor log files --> Provide path to log files: **/var/logs/syslog** --> Enter to accept path default --> Enter to accept default stream name or change it --> Select the number of logs you want to be saved in a day which will allocate the necessary time for the instance to relay and collect these logs in a day. [Log files can be long so choose a number that your instance can handle] --> Add or ignore any other log files you may or may not want to collect --> 
 
-	Note: Since I do not have permission to give AWS permission to write to my log files, I wasn't able to see my config file for the cloudwatch 		agent in my AWS account but it is saved in my instance and I can still utilize CloudWatch. If you have permission for PUT parameter in your AWS 	account, you can continue:
+* Note: Since I do not have permission to give AWS permission to write to my log files, I wasn't able to see my config file for the cloudwatch 		agent in my AWS account but it is saved in my instance and I can still utilize CloudWatch. If you have permission for PUT parameter in your AWS 	account, you can continue:
 
-		Click **Yes** to store the JSON config file in the SSM parameter (this is possible because of the PUT parameter or write capability given 		in the Admin policy in the role created for the cloudwatch agent --> 
+Click **Yes** to store the JSON config file in the SSM parameter (this is possible because of the PUT parameter or write capability given 		in the Admin policy in the role created for the cloudwatch agent --> 
 
-		Press **Enter** to accept default of parameter store name [AmazonCloudWatch-linux], default region that the virtual server of the 			instance was launched in [us-east-1]--> 
+Press **Enter** to accept default of parameter store name [AmazonCloudWatch-linux], default region that the virtual server of the 			instance was launched in [us-east-1]--> 
 
-		**Choose or Enter** AWS credential that should be used to send the config file to the parameter store --> 
-		Program should exit now
+**Choose or Enter** AWS credential that should be used to send the config file to the parameter store --> Program should exit now
 
 
 * You should be at this path in the instance still:  **/opt/aws/amazon-cloudwatch-agent/bin/** --> if you press **ls** you should see the config file that we just generated, sent, to the parameter store, and stored onto our EC2 instance.
