@@ -16,13 +16,14 @@ ___________________
 ### <ins> **STEPS FOR WEB APPLICATION DEPLOYMENT** </ins>
 
 _____________________________________________________________________________
-Step 1: Create VPC in AWS:
-	Go to VPC in AWS -->  Choose **VPC & more** to preconfigure route table and internet gateway 
+### Step 1: Create VPC in AWS:
+	
+ Go to VPC in AWS -->  Choose **VPC & more** to preconfigure route table and internet gateway 
 	
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
 
 ______________________________________________________________________________
-Step 2: Use git code through remote repository through VS code by creating a second branch to make changes in the Jenkinsfile from before then adding, committing, and pushing those changes to my local repository on Github.
+### Step 2: Use git code through remote repository through VS code by creating a second branch to make changes in the Jenkinsfile from before then adding, committing, and pushing those changes to my local repository on Github.
 
 	
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
@@ -79,23 +80,27 @@ python3 -m gunicorn -w 4 application:app -b 0.0.0.0 --daemon
 _______________________________________________________________________
 
 
+* When a **git pull** is done, the server will provide you with a token of sorts to enter in GitHub and give the text code editor permissions to push these changes to GitHub. You will see these commits in your local repo as you can see below.
+* 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
+
 
 ________________________________________________________________________
 
        
-Step 3: Launch instance with t2 medium capacity with the necessary protocols & applications
+### Step 3: Launch instance with t2 medium capacity with the necessary protocols & applications
 
  Press **Instances** in the Dashboard --> Press **Launch Instance** button--> Name web server --> Select **Ubuntu** for OS --> Select **t2.medium** --> Select suggested key pair -->
 
-  **Edit** Network settings --> **Select** new VPC -->	Select public subnet in us-east-1a availbility zone
-	**Create** security group with ports: 80 & 8080 [HTTP], 8000, 22[SSH], & 5000[Nginx] --> Press **Launch Instance**
+**Edit** Network settings --> **Select** new VPC -->	Select public subnet in us-east-1a availbility zone
+**Create** security group with ports: 80 & 8080 [HTTP], 8000, 22[SSH], & 5000[Nginx] --> Press **Launch Instance**
 
 
  _______________________________________________________________________________________
+ 
 
-Step 4: Install Python 3.10 version to read python files in application code.
+### Step 4: Install Python 3.10 version to read python files in application code.
 
 <ins> Run commands in EC2 terminal to download newest versions and packages for Python 3.10:</ins>
 
@@ -109,7 +114,7 @@ Step 4: Install Python 3.10 version to read python files in application code.
 
 ______________________________________________________________________________________
 
-Step 5:	Install Jenkins 2.4.01 along with "Pipeline Keep Running Step" 	plugin, 
+### Step 5: Install Jenkins 2.4.01 along with "Pipeline Keep Running Step" 	plugin, 
 	*Important to know: Jenkins comes out with weekly releases of its installation code so previous methods for installing may not work after some time. You can visit the Jenkins User Handbook here to [learn more]!(https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)
 
 <ins> Run commands in EC2 terminal to download newest versions and packages for Python 3.10:</ins>
@@ -147,7 +152,7 @@ Step 5:	Install Jenkins 2.4.01 along with "Pipeline Keep Running Step" 	plugin,
 ___________________________________________________________________
 
 
-##### Step 6: Install Nginx, a reverse proxy server to act as a web server to deploy application 
+### Step 6: Install Nginx, a reverse proxy server to act as a web server to deploy application 
 
 **sudo apt update**
 
@@ -174,7 +179,7 @@ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 ______________________________________________________________________
 
 
-#### Step 7: Configure Amazon Cloudwatch monitoring agent on server 
+### Step 7: Configure Amazon Cloudwatch monitoring agent on server 
 
 </ins> [Before installing, need to attach permissions to AWS so that cloudwatch can be used on instance:] </ins>
 	
@@ -246,13 +251,14 @@ Press **Enter** to accept default of parameter store name [AmazonCloudWatch-linu
 **Choose or Enter** AWS credential that should be used to send the config file to the parameter store --> Program should exit now
 
 
-* You should be at this path in the instance still:  **/opt/aws/amazon-cloudwatch-agent/bin/** --> if you press **ls** you should see the config file that we just generated, sent, to the parameter store, and stored onto our EC2 instance.
+* You should be at this path in the instance still:  **/opt/aws/amazon-cloudwatch-agent/bin/** --> if you press **ls** you should see the config file that we just generated, sent to the parameter store, and stored onto our EC2 instance.
+  
+* Run command: **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json** to process the amazon cloudwatch agent
 
-	Run command: **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json** to process the amazon cloudwatch agent
-	Check to see if agent is running properly: **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status**
+* Check to see if agent is running properly: **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status**
   
 
-##### Step 8:  Create staging environment in Jenkins:
+### Step 8:  Create staging environment in Jenkins:
 
 	a.Copy and paste public ip address of EC2 instance into a new browser with port 8080 that we included in the security group when launching the instance: <http://3.95.193.197:8080>
   
@@ -273,9 +279,9 @@ You will be prompted to enter your GitHub credentials to connect GitHib repo and
 
 </ins> Create token for Jenkins using GitHub account: </ins>
 
-	Go back to your GitHub and press profile picture/icon --> Select Settings--> Developer Settings--> Personal Access Tokens--> Tokens(classic) --> 	Select scopes: repo and admin repo to give full access to repository --> Generate new token (classic)--> Sign into GitHub if prompted --> Copy 		and paste token into password line in Jenkins [the token is for added security and authorization and to connect GitHub repo with Jenkins to scan 	and test build for application]
+   Go back to your GitHub and press profile picture/icon --> Select Settings--> Developer Settings--> Personal Access Tokens--> Tokens(classic) --> 	Select scopes: repo and admin repo to give full access to repository --> Generate new token (classic)--> Sign into GitHub if prompted --> Copy 		and paste token into password line in Jenkins [the token is for added security and authorization and to connect GitHub repo with Jenkins to scan 	and test build for application]
 
-Scan repository Now to test build --> Select **Build History** to view console output with git commands and pipeline stage process --> Pass staging environment in Jenkins before proceeding --> Check**console output** responses and check the phases of the staging environment.
+   Scan repository Now to test build --> Select **Build History** to view console output with git commands and pipeline stage process --> Pass staging environment in Jenkins before proceeding --> Check**console output** responses and check the phases of the staging environment.
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsbuild.jpg)
 
@@ -302,7 +308,7 @@ Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance yo
 
 Under **Conditions**, select when conditions that the instance needs to meet in order for you to recieve a notification 
  
- 	For Alarm thresholds, select the metric and criteria for the alarm. You can leave the default settings for selections or customize   Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes --> Press **Next**
+   For Alarm thresholds, select the metric and criteria for the alarm. You can leave the default settings for selections or customize   Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes --> Press **Next**
 
 Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
 
