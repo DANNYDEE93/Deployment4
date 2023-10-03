@@ -9,7 +9,8 @@ ___________________
 
 ### <ins>ISSUES:</ins>
 ___________________
-&emsp;&emsp;&emsp;&emsp;		
+* Git Code: I tried to push my changes after I merged but realized I needed to fetch the changes in my main first to update the changes in both the remote and local repo.
+* Jenkis Installation: I was having trouble installing Jenkins because I was using an old code application that did not work anymore 
 
 
 
@@ -23,13 +24,16 @@ _____________________________________________________________________________
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
 
 ______________________________________________________________________________
-### Step 2: Use git code through remote repository through VS code by creating a second branch to make changes in the Jenkinsfile from before then adding, committing, and pushing those changes to my local repository on Github.
+### Step 2: Git commits
+
+* Use git code through remote repository through VS code by creating a second branch to make changes in the Jenkinsfile from before then adding, committing, and pushing those changes to my local repository on Github.
+* Add GitHub URL in config file to give code editor permission to make changes to my local repo. 
 
 	
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
 _______________________________________________________________________
 
-	Below are important additions that I changed in the Jenkinsfile to include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependecies for  Gunicorn with the Flask application to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
+&emsp;&emsp;&emsp;&emsp;		Below are important additions that I changed in the Jenkinsfile to include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependecies for  Gunicorn with the Flask application to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
 
 _______________________________________________________________________________________-
 
@@ -80,8 +84,8 @@ python3 -m gunicorn -w 4 application:app -b 0.0.0.0 --daemon
 _______________________________________________________________________
 
 
-* When a **git pull** is done, the server will provide you with a token of sorts to enter in GitHub and give the text code editor permissions to push these changes to GitHub. You will see these commits in your local repo as you can see below.
-* 
+* When a **git pull** is done, the server will provide you with a token of sorts to enter in GitHub to give GitHub permission to connect with the git commits and code editor. You will see these commits in your local repo as you can see below.
+
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
 
@@ -102,7 +106,7 @@ ________________________________________________________________________
 
 ### Step 4: Install Python 3.10 version to read python files in application code.
 
-<ins> Run commands in EC2 terminal to download newest versions and packages for Python 3.10:</ins>
+<ins> Run commands in EC2 terminal to download newest versions and packages:</ins>
 
    **sudo apt update** --> *[update system and checks for upgrades]*
 
@@ -114,10 +118,11 @@ ________________________________________________________________________
 
 ______________________________________________________________________________________
 
-### Step 5: Install Jenkins 2.4.01 along with "Pipeline Keep Running Step" 	plugin, 
-	*Important to know: Jenkins comes out with weekly releases of its installation code so previous methods for installing may not work after some time. You can visit the Jenkins User Handbook here to [learn more]!(https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)
+### Step 5: Install Jenkins 2.4.01 
 
-<ins> Run commands in EC2 terminal to download newest versions and packages for Python 3.10:</ins>
+* Important to know: Jenkins comes out with weekly releases of its installation code so previous methods for installing may not work after some time. You can visit the Jenkins User Handbook here to [learn more]!(https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)
+
+<ins> Run commands in EC2 terminal to download newest versions and packages for Jenkins 2.4.01 :</ins>
 
 **sudo apt update**
 
@@ -135,7 +140,7 @@ ________________________________________________________________________________
 
 **sudo systemctl status jenkins** *[checks that jenkins package is actively running on EC2 before you run your build through the jenkins web browser later on]*
 
-	*If you have previous installed packages for Jenkins, you will need to remove any and all files with the **rm command** and run *sudo apt clean** to clear your cached history before trying to install a new version of Jenkins and for it to work.
+* If you have previous installed packages for Jenkins, you will need to remove any and all files with the **rm command** and run *sudo apt clean** to clear your cached history before trying to install a new version of Jenkins and for it to work.
 
 </ins> Installation of Java which is the language that Jenkins is written and understood from: </ins>
 
@@ -185,13 +190,13 @@ ______________________________________________________________________
 	
  **Go to IAM Roles** --> **Create** IAM roles, Trusted entity type: **AWS service** --> Use case: EC2, **Next**
 	
- 	Add permissions policies: Select **CloudWatch AgentServerPolicy** or AdminPolicy for GET & PUT parameters [gives agent ability to recieve info and write to info logs to assess them and allows metric data to be accessed by cloudwatch to send info to the agent on EC2 instance], **Next**
+ * Add permissions policies: Select **CloudWatch AgentServerPolicy** or AdminPolicy for GET & PUT parameters [gives agent ability to recieve info and write to info logs to assess them and allows metric data to be accessed by cloudwatch to send info to the agent on EC2 instance], **Next**
   
-	Role name: "CloudWatchAgentServerRole" [allows EC2 instances to call AWS services on your behalf to automatically create logs of events, errors and other analytical measures of the functionality of the instance and other applications provisioned through it for the deployment process, **Create Role**
+* Role name: "CloudWatchAgentServerRole" [allows EC2 instances to call AWS services on your behalf to automatically create logs of events, errors and other analytical measures of the functionality of the instance and other applications provisioned through it for the deployment process, **Create Role**
 	
-	Attach role to EC2 on AWS dashboard: Select the public EC2 instance created for deployment --> Go to Actions --> Go to security --> Go to **Modify IAM role** --> Choose Cloudwatchagentserverole --> Select **Update IAM Role**
+* Attach role to EC2 on AWS dashboard: Select the public EC2 instance created for deployment --> Go to Actions --> Go to security --> Go to **Modify IAM role** --> Choose Cloudwatchagentserverole --> Select **Update IAM Role**
 
-	Go to EC2 terminal --> Download the CloudWatch agent package --> *Download link depends on platform being used to run EC2 (Current OS: Ubuntu)-->  *further instruction on downloading CloudWatch can be found [here]!(https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/download-cloudwatch-agent-commandline.html)*
+* Go to EC2 terminal --> Download the CloudWatch agent package --> *Download link depends on platform being used to run EC2 (Current OS: Ubuntu)-->  *further instruction on downloading CloudWatch can be found [here]!(https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/download-cloudwatch-agent-commandline.html)*
 
 ____________________________________________________________________________
 
