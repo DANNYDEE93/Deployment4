@@ -20,23 +20,20 @@ __________________________________________________________
 
 
 _____________________________________________________________________________
-Step 1: Create VPC in AWS to preconfigure route table and internet gateway
-
-	Go to VPC in AWS -->
-	**diagram**
+Step 1: Create VPC in AWS:
+	Go to VPC in AWS -->  Choose **VPC & more** to preconfigure route table and internet gateway 
+	
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
 
 ______________________________________________________________________________
 Step 2: Git code through remote repository through VS code and then commit and push changes to 	the local repository on Github.
 	
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
-	**git commit timeline diagram*
 
-Uptdate Jenkinsfile with following script in order to __________________:
+	Uptdate Jenkinsfile with following script to include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependecies for  Gunicorn with the Flask application to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
 
-pipeline {
-agent any
-stages {
+______________________________________________
+
 stage ('Build') {
 steps {
 sh '''#!/bin/bash
@@ -45,9 +42,9 @@ source test3/bin/activate
 pip install pip --upgrade
 pip install -r requirements.txt
 export FLASK_APP=application
-'''
-}
-}
+
+________________________________________________
+
 stage ('test') {
 steps {
 sh '''#!/bin/bash
@@ -59,8 +56,8 @@ post{
 always {
 junit 'test-reports/results.xml'
 }
-}
-}
+__________________________________________________________
+
 stage ('Clean') {
 steps {
 sh '''#!/bin/bash
@@ -71,8 +68,8 @@ kill $(cat pid.txt)
 exit 0
 fi
 '''
-}
-}
+__________________________________________________________________________
+
 stage ('Deploy') {
 steps {
 keepRunning {
@@ -81,11 +78,7 @@ pip install -r requirements.txt
 pip install gunicorn
 python3 -m gunicorn -w 4 application:app -b 0.0.0.0 --daemon
 '''
-}
-}
-}
-}
-}
+_______________________________________________________________________
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
 
