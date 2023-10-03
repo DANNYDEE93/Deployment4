@@ -18,6 +18,7 @@ ___________________
 
 _____________________________________________________________________________
 ### Step 1: Create VPC in AWS:
+__________________________________________________________________________
 	
  Go to VPC in AWS -->  Choose **VPC & more** to preconfigure route table and internet gateway 
 	
@@ -25,6 +26,7 @@ _____________________________________________________________________________
 
 ______________________________________________________________________________
 ### Step 2: Git commits
+__________________________________________________________________________
 
 * Use git code through remote repository through VS code by creating a second branch to make changes in the Jenkinsfile from before then adding, committing, and pushing those changes to my local repository on Github.
 * Add GitHub URL in config file to give code editor permission to make changes to my local repo. 
@@ -95,6 +97,10 @@ ________________________________________________________________________
        
 ### Step 3: Launch instance with t2 medium capacity with the necessary protocols & applications
 
+__________________________________________________________________________
+
+
+
  Press **Instances** in the Dashboard --> Press **Launch Instance** button--> Name web server --> Select **Ubuntu** for OS --> Select **t2.medium** --> Select suggested key pair -->
 
 **Edit** Network settings --> **Select** new VPC -->	Select public subnet in us-east-1a availbility zone
@@ -105,6 +111,10 @@ ________________________________________________________________________
  
 
 ### Step 4: Install Python 3.10 version to read python files in application code.
+
+__________________________________________________________________________
+
+
 
 <ins> Run commands in EC2 terminal to download newest versions and packages:</ins>
 
@@ -119,6 +129,10 @@ ________________________________________________________________________
 ______________________________________________________________________________________
 
 ### Step 5: Install Jenkins 2.4.01 
+
+__________________________________________________________________________
+
+
 
 * Important to know: Jenkins comes out with weekly releases of its installation code so previous methods for installing may not work after some time. You can visit the Jenkins User Handbook here to [learn more]!(https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)
 
@@ -159,6 +173,8 @@ ___________________________________________________________________
 
 ### Step 6: Install Nginx, a reverse proxy server to act as a web server to deploy application 
 
+_______________________________________________________________________
+
 **sudo apt update**
 
 **sudo apt-get install nginx**
@@ -185,6 +201,9 @@ ______________________________________________________________________
 
 
 ### Step 7: Configure Amazon Cloudwatch monitoring agent on server 
+
+__________________________________________________________________________
+
 
 </ins> [Before installing, need to attach permissions to AWS so that cloudwatch can be used on instance:] </ins>
 	
@@ -262,8 +281,12 @@ Press **Enter** to accept default of parameter store name [AmazonCloudWatch-linu
 
 * Check to see if agent is running properly: **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status**
   
+__________________________________________________________________________
 
 ### Step 8:  Create staging environment in Jenkins:
+
+__________________________________________________________________________
+
 
 	a.Copy and paste public ip address of EC2 instance into a new browser with port 8080 that we included in the security group when launching the instance: <http://3.95.193.197:8080>
   
@@ -291,7 +314,17 @@ You will be prompted to enter your GitHub credentials to connect GitHib repo and
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsbuild.jpg)
 
 
-##### Step 9: Copy and paste public ip address and port 5000 (this port is necessary for nginx and we added in the nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:5000>
+__________________________________________________________________________
+
+##### Step 9: Nginx Production Environment 
+
+__________________________________________________________________________
+
+Copy and paste public ip address and port 5000 (this port is necessary for nginx and we added in the nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:5000>
+
+
+__________________________________________________________________________
+
 
 If you try to do this step, you will see that it doesn't work because we did not add port 5000 on the security group that we added to the EC2 instance. 
 
@@ -299,12 +332,15 @@ Go to **security group** created for the instance --> Add Port 5000 and re-try S
 
 The web application should be available now 
 
-[]!()
+************************************************************************
 
 
-
+__________________________________________________________________________
 
 #### Step 10: Configure CloudWatch alarm & email notifications: 
+
+__________________________________________________________________________
+
 
 </ins> To create an alarm using the Amazon EC2 console: </ins>
   
