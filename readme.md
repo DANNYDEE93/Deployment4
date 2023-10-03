@@ -24,12 +24,12 @@ Step 1: Create VPC in AWS to preconfigure route table and internet gateway
 
 	Go to VPC in AWS -->
 	**diagram**
-
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
 
 ______________________________________________________________________________
 Step 2: Git code through remote repository through VS code and then commit and push changes to 	the local repository on Github.
 	
-
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
 	**git commit timeline diagram*
 
 Uptdate Jenkinsfile with following script in order to __________________:
@@ -87,6 +87,7 @@ python3 -m gunicorn -w 4 application:app -b 0.0.0.0 --daemon
 }
 }
 
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
 
 ________________________________________________________________________
 
@@ -146,7 +147,11 @@ Step 5:	Install Jenkins 2.4.01 along with "Pipeline Keep Running Step" 	plugin,
 
 **sudo apt install openjdk-17-jre**
 
-**java -version**
+**java -version** *(check that you have the latest version installed)*
+
+
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsconfig.jpg)
+
 
 ___________________________________________________________________
 
@@ -173,6 +178,7 @@ proxy_set_header Host $host;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/nginxdep4.jpg)
 
 ______________________________________________________________________
 
@@ -213,7 +219,7 @@ ____________________________________________________________________________
 
 __________________________________________________________________________________________
 
-[]!()
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchagent.jpg)
 
  
 </ins> Answer the questions pertaining to the configurations of your EC2: </ins>
@@ -239,7 +245,7 @@ Select **No** to having any existing CloudWatch Log Agent -->
 
 Select **Yes** to monitor log files --> Provide path to log files: **/var/logs/syslog** --> Enter to accept path default --> Enter to accept default stream name or change it --> Select the number of logs you want to be saved in a day which will allocate the necessary time for the instance to relay and collect these logs in a day. [Log files can be long so choose a number that your instance can handle] --> Add or ignore any other log files you may or may not want to collect --> 
 
-	SN..: Since I do not have permission to give AWS permission to write to my log files, I wasn't able to see my config file for the cloudwatch 		agent in my AWS account but it is saved in my instance and I can still utilize CloudWatch. If you have permission for PUT parameter in your AWS 	account, you can continue:
+	Note: Since I do not have permission to give AWS permission to write to my log files, I wasn't able to see my config file for the cloudwatch 		agent in my AWS account but it is saved in my instance and I can still utilize CloudWatch. If you have permission for PUT parameter in your AWS 	account, you can continue:
 
 		Click **Yes** to store the JSON config file in the SSM parameter (this is possible because of the PUT parameter or write capability given 		in the Admin policy in the role created for the cloudwatch agent --> 
 
@@ -280,6 +286,8 @@ You will be prompted to enter your GitHub credentials to connect GitHib repo and
 
 Scan repository Now to test build --> Select **Build History** to view console output with git commands and pipeline stage process --> Pass staging environment in Jenkins before proceeding --> Check**console output** responses and check the phases of the staging environment.
 
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsbuild.jpg)
+
 
 ##### Step 9: Copy and paste public ip address and port 5000 (this port is necessary for nginx and we added in the nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:5000>
 
@@ -301,20 +309,31 @@ The web application should be available now
 
 Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance you want alarms for --> Information should be filled out for the most part --> Modify **Statistic** and **Period** for what metric you want to be notified about and the period time that the metric is being measured --> Press **Select Metrics**
 
-	Under **COnditions**, select when conditions that the instance needs to meet in order for you to recieve a notification 
+	Under **Conditions**, select when conditions that the instance needs to meet in order for you to recieve a notification 
  
- 	For Alarm thresholds, select the metric and criteria for the alarm. For example, you can leave the default settings for Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes --> Press **Next**
+ 	For Alarm thresholds, select the metric and criteria for the alarm. You can leave the default settings for selections or  Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes --> Press **Next**
 
 	Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
+
+
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchconfig.jpg)
+
 
 *For the future, you can auto scale or create ec2 actions so that in case certain metrics reach a specifiec threshold in the alarm, the instance can perform an action to intervene with any issues that may occur*
 
 	Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms. --> Select alarm 
 
-[]@()
-	Do a stress test in the terminal by installing: **sudo apt install stress -ng** [This command helps test the functionality by directing simulated 	trafic to the instance and seeing if it can handle it, as well as, test if my alarm is working.]
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
+
+ 
+ 	Do a stress test in the terminal by installing: **sudo apt install stress -ng** [This command helps test the functionality by directing simulated 	trafic to the instance and seeing if it can handle it, as well as, test if my alarm is working.]
  	
   	Then run: **sudo stress-ng --matrix 1 -t 1m** [to test the durability of the instance that is hosting applications needed for my deployment] This command does a 1 minute test but you can change the amount of time as needed. Since I have already configured an alarm for this instance, I recieved an email notification that it was in a state of **'in Alarm'**. This would prompt me to go to my instance and check on its processes and see if there are any configurations that need tobe done to ensure the proper functionality of my deployment. 
+
+
+[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
+
+
 
 Recieved email and easily accessed alarm metrics since we added it to the Dashboard
 
@@ -324,8 +343,6 @@ Check CPU usage again.
 
 ### <ins>OPTIMIZATION:</ins>
 ___________________
-&emsp;&emsp;&emsp;&emsp;
-
-*After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance becuase my usual t2.micro instance would not have been able to handle all the installations we did on it. For long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
+&emsp;&emsp;&emsp;&emsp;	After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance becuase my usual t2.micro instance would not have been able to handle all the installations I added to it. For long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
 	
 	
