@@ -287,19 +287,18 @@ __________________________________________________________________________
 
 __________________________________________________________________________
 
-
-	a.Copy and paste public ip address of EC2 instance into a new browser with port 8080 that we included in the security group when launching the instance: <http://3.95.193.197:8080>
+* Copy and paste public ip address of EC2 instance into a new browser with port 8080 that we included in the security group when launching the instance: <http://3.95.193.197:8080>
   
-	b. You will be asked to enter a password which was saved in your instance when installing Jenkins. You can find it by running the command: **cd /var/lib/jenkins/secrets/initialAdminPassword**
+* You will be asked to enter a password which was saved in your instance when installing Jenkins. You can find it by running the command: **cd /var/lib/jenkins/secrets/initialAdminPassword**
 *don't skip over creating login credentials so that you can log into Jenkins later. 
 	
-	c. Go to **Manage Jenkins** in the Jenkins Dashboard, navigate to **Plugins** --> **Available plugins** --> Search and install **Pipeline Keep Running Step** plugin. This plugin allows me to define my script so its easier to see when the build is running properly or has been triggered. It's also easier to keep record and check historical changes in the functionality of an application. 
+* Go to **Manage Jenkins** in the Jenkins Dashboard, navigate to **Plugins** --> **Available plugins** --> Search and install **Pipeline Keep Running Step** plugin. This plugin allows me to define my script so its easier to see when the build is running properly or has been triggered. It's also easier to keep record and check historical changes in the functionality of an application. 
 
 ______________________________________________________________________________
 
 </ins> Start the multibranch pipeline on the Jenkins web browser to test the application in the GitHub repository: </ins>
 
-	Go to **New Item** on the Dashboard --> Name project --> Select **Multibranch pipeline** --> Go to **Branch Sources** --> Select **GitHub** under credentials --> Add **Jenkins** [multibranch pipeline allows the implementation of different Jenkins files for different branches of the same project which you will need for later steps in this process where I update my Jenkins file in my repo]
+* Go to **New Item** on the Dashboard --> Name project --> Select **Multibranch pipeline** --> Go to **Branch Sources** --> Select **GitHub** under credentials --> Add **Jenkins** [multibranch pipeline allows the implementation of different Jenkins files for different branches of the same project which you will need for later steps in this process where I update my Jenkins file in my repo]
 
 You will be prompted to enter your GitHub credentials to connect GitHib repo and follow steps to make token on GitHub for Jenkins credential password. 
 
@@ -316,7 +315,7 @@ You will be prompted to enter your GitHub credentials to connect GitHib repo and
 
 __________________________________________________________________________
 
-##### Step 9: Nginx Production Environment 
+### Step 9: Nginx Production Environment 
 
 __________________________________________________________________________
 
@@ -337,7 +336,7 @@ The web application should be available now
 
 __________________________________________________________________________
 
-#### Step 10: Configure CloudWatch alarm & email notifications: 
+### Step 10: Configure CloudWatch alarm & email notifications: 
 
 __________________________________________________________________________
 
