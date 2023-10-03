@@ -10,8 +10,8 @@ ___________________
 ### <ins>ISSUES:</ins>
 ___________________
 * Git Code: I tried to push my changes after I merged but realized I needed to fetch the changes in my main first to update the changes in both the remote and local repo.
-* Jenkis Installation: I was having trouble installing Jenkins because I was using an old code application that did not work anymore 
-
+* Jenkis Installation: I was having trouble installing Jenkins because I was using an old code application that did not work anymore. I needed to go to Jenkins site and find the updated code to install on my EC2
+* Nginx error: I realized I edited the config file to port 5000 but I did not include it in my security group to be utilized
 
 
 ### <ins> **STEPS FOR WEB APPLICATION DEPLOYMENT** </ins>
@@ -204,12 +204,11 @@ ______________________________________________________________________
 
 __________________________________________________________________________
 
-
 </ins> [Before installing, need to attach permissions to AWS so that cloudwatch can be used on instance:] </ins>
 	
- **Go to IAM Roles** --> **Create** IAM roles, Trusted entity type: **AWS service** --> Use case: EC2, **Next**
+**Go to IAM Roles** --> **Create** IAM roles, Trusted entity type: **AWS service** --> Use case: EC2, **Next**
 	
- * Add permissions policies: Select **CloudWatch AgentServerPolicy** or AdminPolicy for GET & PUT parameters [gives agent ability to recieve info and write to info logs to assess them and allows metric data to be accessed by cloudwatch to send info to the agent on EC2 instance], **Next**
+* Add permissions policies: Select **CloudWatch AgentServerPolicy** or AdminPolicy for GET & PUT parameters [gives agent ability to recieve info and write to info logs to assess them and allows metric data to be accessed by cloudwatch to send info to the agent on EC2 instance], **Next**
   
 * Role name: "CloudWatchAgentServerRole" [allows EC2 instances to call AWS services on your behalf to automatically create logs of events, errors and other analytical measures of the functionality of the instance and other applications provisioned through it for the deployment process, **Create Role**
 	
@@ -356,8 +355,6 @@ Select **In alarm** --> Create a new topic: **Name topic** or select default for
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchconfig.jpg)
 
 
-*For the future, you can auto scale or create ec2 actions so that in case certain metrics reach a specifiec threshold in the alarm, the instance can perform an action to intervene with any issues that may occur*
-
 Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms. --> Select alarm 
 
  
@@ -382,5 +379,7 @@ Recieved email and easily accessed alarm metrics since we added it to the Dashbo
 ### <ins>OPTIMIZATION:</ins>
 ___________________
 &emsp;&emsp;&emsp;&emsp;	After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance becuase my usual t2.micro instance would not have been able to handle all the installations I added to it. For long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
+
+*For the future, you can auto scale or create ec2 actions so that in case certain metrics reach a specifiec threshold in the alarm, the instance can perform an action to intervene with any issues that may occur*
 	
 	
