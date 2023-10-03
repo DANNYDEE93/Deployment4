@@ -10,8 +10,8 @@ ___________________
 ### <ins>ISSUES:</ins>
 ___________________
 * Git Code: I tried to push my changes after I merged but realized I needed to fetch the changes in my main first to update the changes in both the remote and local repo.
-* Jenkis Installation: I was having trouble installing Jenkins because I was using an old code application that did not work anymore. I needed to go to Jenkins site and find the updated code to install on my EC2
-* Nginx error: I realized I edited the config file to port 5000 but I did not include it in my security group to be utilized
+* Jenkis Installation: I was having trouble installing Jenkins because I was using an old code application that did not work anymore. I needed to go to Jenkins site and find the updated code to install on my EC2. I had to remove the Jenkins packages that weren't working and clean my cache history for the working code to properly install the packages for Jenkins.
+* Nginx error: I realized I edited the config file to port 5000 but I did not include it in my security group to be utilized. I was still having trouble 
 
 
 ### <ins> **STEPS FOR WEB APPLICATION DEPLOYMENT** </ins>
@@ -20,7 +20,7 @@ _____________________________________________________________________________
 ### Step 1: Create VPC in AWS:
 __________________________________________________________________________
 	
- Go to VPC in AWS -->  Choose **VPC & more** to preconfigure route table and internet gateway 
+* Go to VPC in AWS -->  Choose **VPC & more** to preconfigure route table and internet gateway 
 	
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
 
@@ -101,7 +101,7 @@ __________________________________________________________________________
 
 
 
- Press **Instances** in the Dashboard --> Press **Launch Instance** button--> Name web server --> Select **Ubuntu** for OS --> Select **t2.medium** --> Select suggested key pair -->
+* Press **Instances** in the Dashboard --> Press **Launch Instance** button--> Name web server --> Select **Ubuntu** for OS --> Select **t2.medium** --> Select suggested key pair -->
 
 **Edit** Network settings --> **Select** new VPC -->	Select public subnet in us-east-1a availbility zone
 **Create** security group with ports: 80 & 8080 [HTTP], 8000, 22[SSH], & 5000[Nginx] --> Press **Launch Instance**
@@ -214,7 +214,7 @@ __________________________________________________________________________
 	
 * Attach role to EC2 on AWS dashboard: Select the public EC2 instance created for deployment --> Go to Actions --> Go to security --> Go to **Modify IAM role** --> Choose Cloudwatchagentserverole --> Select **Update IAM Role**
 
-* Go to EC2 terminal --> Download the CloudWatch agent package --> *Download link depends on platform being used to run EC2 (Current OS: Ubuntu)-->  *further instruction on downloading CloudWatch can be found [here]!(https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/download-cloudwatch-agent-commandline.html)*
+* Go to EC2 terminal --> Download the CloudWatch agent package --> *Download link depends on platform being used to run EC2 (Current OS: Ubuntu)-->  *further instruction on downloading CloudWatch can be found [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/download-cloudwatch-agent-commandline.html)*
 
 ____________________________________________________________________________
 
