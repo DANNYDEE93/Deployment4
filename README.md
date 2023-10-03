@@ -134,7 +134,7 @@ __________________________________________________________________________
 
 
 
-* Important to know: Jenkins comes out with weekly releases of its installation code so previous methods for installing may not work after some time. You can visit the Jenkins User Handbook here to [learn more]!(https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)
+* Important to know: Jenkins comes out with weekly releases of its installation code so previous methods for installing may not work after some time. You can visit the Jenkins User Handbook [here](https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)
 
 <ins> Run commands in EC2 terminal to download newest versions and packages for Jenkins 2.4.01 :</ins>
 
