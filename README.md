@@ -92,6 +92,12 @@ _______________________________________________________________________
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
 
 
+
+Below is a git commit timeline to keep track of the changes made in my aaplication files for deployment:
+
+
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/gitCommitTimeline.jpg)
+
 ________________________________________________________________________
 
        
@@ -133,7 +139,6 @@ ________________________________________________________________________________
 __________________________________________________________________________
 
 
-
 * Important to know: Jenkins comes out with weekly releases of its installation code so previous methods for installing may not work after some time. You can visit the Jenkins User Handbook [here](https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)
 
 <ins> Run commands in EC2 terminal to download newest versions and packages for Jenkins 2.4.01 :</ins>
@@ -167,6 +172,9 @@ __________________________________________________________________________
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsconfig.jpg)
 
+* After taking the ip address and using port 8080 in another browser, you will be asked for a password that is installed in your instance upon installation. You can find it at the path shown below. 
+
+* Once you create credentials for Jenkins/ staging environment --> Go to the **Manage Jenkins** tabs in the Dashboard --> **Plugins** --> **Install** the **Pipeline Keep Running Step** for continuous testing that can be triggered through git commits since it is connected with my local GitHub repo. 
 
 ___________________________________________________________________
 
@@ -183,7 +191,7 @@ _______________________________________________________________________
 
 </ins> **Edit** the configuration file and **cd** & **nano** into default file through the following path: "/etc/nginx/sites-enabled/default" </ins>
 
-**First change the port from 80 to 5000, see below:**
+**First change the port from 80 to 5000 to use this in another browser to deploy my web application :**
 server {
 listen 5000 default_server;
 listen [::]:5000 default_server;
@@ -307,7 +315,7 @@ You will be prompted to enter your GitHub credentials to connect GitHib repo and
 
    Go back to your GitHub and press profile picture/icon --> Select Settings--> Developer Settings--> Personal Access Tokens--> Tokens(classic) --> 	Select scopes: repo and admin repo to give full access to repository --> Generate new token (classic)--> Sign into GitHub if prompted --> Copy 		and paste token into password line in Jenkins [the token is for added security and authorization and to connect GitHub repo with Jenkins to scan 	and test build for application]
 
-   Scan repository Now to test build --> Select **Build History** to view console output with git commands and pipeline stage process --> Pass staging environment in Jenkins before proceeding --> Check**console output** responses and check the phases of the staging environment.
+   Scan repository Now to test build --> Select **Build History** to view console output with git commands and pipeline stage process --> Pass staging environment in Jenkins before proceeding --> Check **console output** responses and check the phases of the staging environment.
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsbuild.jpg)
 
