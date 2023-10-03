@@ -24,12 +24,12 @@ Step 1: Create VPC in AWS to preconfigure route table and internet gateway
 
 	Go to VPC in AWS -->
 	**diagram**
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
 
 ______________________________________________________________________________
 Step 2: Git code through remote repository through VS code and then commit and push changes to 	the local repository on Github.
 	
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
 	**git commit timeline diagram*
 
 Uptdate Jenkinsfile with following script in order to __________________:
@@ -87,7 +87,7 @@ python3 -m gunicorn -w 4 application:app -b 0.0.0.0 --daemon
 }
 }
 
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
 
 ________________________________________________________________________
 
@@ -150,7 +150,7 @@ Step 5:	Install Jenkins 2.4.01 along with "Pipeline Keep Running Step" 	plugin,
 **java -version** *(check that you have the latest version installed)*
 
 
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsconfig.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsconfig.jpg)
 
 
 ___________________________________________________________________
@@ -178,7 +178,7 @@ proxy_set_header Host $host;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/nginxdep4.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/nginxdep4.jpg)
 
 ______________________________________________________________________
 
@@ -219,7 +219,7 @@ ____________________________________________________________________________
 
 __________________________________________________________________________________________
 
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchagent.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchagent.jpg)
 
  
 </ins> Answer the questions pertaining to the configurations of your EC2: </ins>
@@ -286,7 +286,7 @@ You will be prompted to enter your GitHub credentials to connect GitHib repo and
 
 Scan repository Now to test build --> Select **Build History** to view console output with git commands and pipeline stage process --> Pass staging environment in Jenkins before proceeding --> Check**console output** responses and check the phases of the staging environment.
 
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsbuild.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsbuild.jpg)
 
 
 ##### Step 9: Copy and paste public ip address and port 5000 (this port is necessary for nginx and we added in the nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:5000>
@@ -316,14 +316,14 @@ Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance yo
 	Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
 
 
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchconfig.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchconfig.jpg)
 
 
 *For the future, you can auto scale or create ec2 actions so that in case certain metrics reach a specifiec threshold in the alarm, the instance can perform an action to intervene with any issues that may occur*
 
 	Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms. --> Select alarm 
 
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
 
  
  	Do a stress test in the terminal by installing: **sudo apt install stress -ng** [This command helps test the functionality by directing simulated 	trafic to the instance and seeing if it can handle it, as well as, test if my alarm is working.]
@@ -331,15 +331,11 @@ Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance yo
   	Then run: **sudo stress-ng --matrix 1 -t 1m** [to test the durability of the instance that is hosting applications needed for my deployment] This command does a 1 minute test but you can change the amount of time as needed. Since I have already configured an alarm for this instance, I recieved an email notification that it was in a state of **'in Alarm'**. This would prompt me to go to my instance and check on its processes and see if there are any configurations that need tobe done to ensure the proper functionality of my deployment. 
 
 
-[]!(https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
-
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
 
 
 Recieved email and easily accessed alarm metrics since we added it to the Dashboard
 
-Check CPU usage again. 
-
-[]!()
 
 ### <ins>OPTIMIZATION:</ins>
 ___________________
