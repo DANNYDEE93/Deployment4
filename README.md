@@ -26,13 +26,14 @@ Step 1: Create VPC in AWS:
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/vpcDeployment4.jpg)
 
 ______________________________________________________________________________
-Step 2: Git code through remote repository through VS code and then commit and push changes to 	the local repository on Github.
+Step 2: Use git code through remote repository through VS code and then commit and push changes to 	the local repository on Github.
 	
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
+_______________________________________________________________________
 
 	Uptdate Jenkinsfile with following script to include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependecies for  Gunicorn with the Flask application to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
 
-______________________________________________
+_______________________________________________________________________________________-
 
 stage ('Build') {
 steps {
@@ -84,9 +85,7 @@ _______________________________________________________________________
 
 ________________________________________________________________________
 
- 
-
-&emsp;&emsp;&emsp;&emsp;        
+       
 Step 3: Launch instance with t2 medium capacity with the necessary protocols & applications
 
  Press **Instances** in the Dashboard --> Press **Launch Instance** button--> Name web server --> Select **Ubuntu** for OS --> Select **t2.medium** --> Select suggested key pair -->
@@ -182,7 +181,7 @@ ______________________________________________________________________
 	
  **Go to IAM Roles** --> **Create** IAM roles, Trusted entity type: **AWS service** --> Use case: EC2, **Next**
 	
- 	Add permissions policies: Select **CloudWatch AgentServerPolicy** or AdminPolicy for GET & PUT parameters [gives agent ability to recieve info and write to info logs to assess them and allows metric data to be accessed 	by cloudwatch to send info to the agent on EC2 instance], **Next**
+ 	Add permissions policies: Select **CloudWatch AgentServerPolicy** or AdminPolicy for GET & PUT parameters [gives agent ability to recieve info and write to info logs to assess them and allows metric data to be accessed by cloudwatch to send info to the agent on EC2 instance], **Next**
   
 	Role name: "CloudWatchAgentServerRole" [allows EC2 instances to call AWS services on your behalf to automatically create logs of events, errors and other analytical measures of the functionality of the instance and other applications provisioned through it for the deployment process, **Create Role**
 	
@@ -211,6 +210,7 @@ ____________________________________________________________________________
 *You should see the configuration manager open up*
 
 __________________________________________________________________________________________
+
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchagent.jpg)
 
