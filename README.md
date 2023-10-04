@@ -1,4 +1,4 @@
-## <ins>Deployment 4: Using AWS for VPC & EC2 instance for Jenkins Staging & Nginx Production </ins>
+## <ins>Deployment 4: Using AWS VPC & EC2 instance for Jenkins Staging & Gunicorn Production </ins>
 _________________________________________________
 ##### Danielle Davis
 ##### October 2, 2023
@@ -9,9 +9,9 @@ ___________________
 
 ### <ins>ISSUES:</ins>
 ___________________
-* Git Code: I tried to push my changes after I merged but realized I needed to fetch the changes in my main first to update the changes in both the remote and local repo.
+* Git Code: I tried to push my changes after I merged but realized I needed to fetch the changes in my main first to update the changes in both the remote and local repo so that they could both recognize them and accept the changes. 
 * Jenkis Installation: I was having trouble installing Jenkins because I was using an old code application that did not work anymore. I needed to go to Jenkins site and find the updated code to install on my EC2. I had to remove the Jenkins packages that weren't working and clean my cache history for the working code to properly install the packages for Jenkins.
-* Nginx error: I realized I edited the config file to port 5000 but I did not include it in my security group to be utilized. I was still having trouble 
+* Gunicorn deployment issues: When trying to open the web application in a new web browser, I got an error that the site could not be reached. After removing and installing Nginx on my EC2 instance multiple times, I realized I need to rebuild my application in Jenkins to configure changes done in the Jenkinsfile and nginx config file. The rebuild basically updated the dependencies and cleared my cache history of any old builds to create a clean virtual production environment for my web applicaiton. After running a successful rebuild, I used the <ipaddress:8000> and then it worked. 
 
 
 ### <ins> **STEPS FOR WEB APPLICATION DEPLOYMENT** </ins>
