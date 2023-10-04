@@ -95,7 +95,7 @@ python3 -m gunicorn -w 4 application:app -b 0.0.0.0 --daemon
 _______________________________________________________________________
 
 
-* When a **git pull** is done, the server will provide you with a code to enter in GitHub to give GitHub permission to connect with the git commits and code editor. You will see these commits in your local repo as you can see below.
+* When a **git pull** is done, the server will provide you with a code to enter in GitHub to give GitHub permission to connect with the git commits and code editor. You will see these commits in your local repo as you can see below. Then **git push** those changes from the remote repo to the local repo that will be connected to Jenkins for my build.
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4localrepo.jpg)
