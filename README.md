@@ -43,11 +43,12 @@ __________________________________________________________________________
 _______________________________________________________________________
 
 <ins> **Additions to Jenkinsfile through VS code editor** </ins>
-&emsp;&emsp;&emsp;&emsp;	The changes include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependencies for Gunicorn and Flask applications to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
 
-_______________________________________________________________________________________-
+The changes I made to the Jenkinsfile includes the dependencies to sustain the virtual environment for the build stage, saves the test stage results, and deletes old builds and running processes attached to them. The script also installs dependencies for Gunicorn and Flask applications to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
 
-* stage ('Build') {
+____________________________________________________________________________
+
+stage ('Build') {
 steps {
 sh '''#!/bin/bash
 python3 -m venv test3
@@ -58,7 +59,7 @@ export FLASK_APP=application
 
 ________________________________________________
 
-* stage ('test') {
+stage ('test') {
 steps {
 sh '''#!/bin/bash
 source test3/bin/activate
@@ -71,7 +72,7 @@ junit 'test-reports/results.xml'
 }
 __________________________________________________________
 
-* stage ('Clean') {
+stage ('Clean') {
 steps {
 sh '''#!/bin/bash
 if [[ $(ps aux | grep -i "gunicorn" | tr -s " " | head -n 1 | cut -d " " -f 2) != 0 ]]
@@ -83,7 +84,7 @@ fi
 '''
 __________________________________________________________________________
 
-* stage ('Deploy') {
+stage ('Deploy') {
 steps {
 keepRunning {
 sh '''#!/bin/bash
@@ -231,9 +232,9 @@ __________________________________________________________________________
 	
 **Go to IAM Roles** --> **Create** IAM roles, Trusted entity type: **AWS service** --> Use case: EC2, **Next**
 	
-* Add permissions policies: Select **CloudWatch AgentServerPolicy** or AdminPolicy for GET & PUT parameters [gives agent ability to receive info and write to info logs to assess them and allows metric data to be accessed by CloudWatch to send info to the agent on EC2 instance], **Next**
+* Add permissions policies: Select **CloudWatch AgentServerPolicy** or AdminPolicy for GET & PUT parameters [gives agent ability to receive info and write to info logs to assess them and allows metric data to be accessed by CloudWatch to send info to the agent on EC2 instance] --> **Next**
   
-* Role name: "CloudWatchAgentServerRole" [allows EC2 instances to call AWS services on your behalf to automatically create logs of events, errors, and other analytical measures of the functionality of the instance and other applications provisioned through it for the deployment process, **Create Role**
+* Role name: "CloudWatchAgentServerRole" [allows EC2 instances to call AWS services on your behalf to automatically create logs of events, errors, and other analytical measures of the functionality of the instance and other applications provisioned through it for the deployment process] --> **Create Role**
 
 	
 * Attach role to EC2 on AWS dashboard: Select the public EC2 instance created for deployment --> Go to Actions --> Go to security --> Go to **Modify IAM role** --> Choose Cloudwatchagentserverole --> Select **Update IAM Role**
@@ -273,11 +274,11 @@ ________________________________________________________________________________
 * Linux --> EC2 --> root user --> 
 **Select** No for 'StatsD daemon' and 'CollectD' [monitoring processing tools] --> 
 
-**Yes** to monitor host metrics such as CPU and memory --> 
+* **Yes** to monitor host metrics such as CPU and memory --> 
 
-**Yes** to monitor cpu metrics per core --> 
+* **Yes** to monitor cpu metrics per core --> 
 
-**Yes**to aggregate EC2 dimensions -->  
+* **Yes**to aggregate EC2 dimensions -->  
 
 * Select for metrics to be collected every 20 -60 seconds --> 
 
@@ -341,7 +342,7 @@ __________________________________________________________________________
 
 __________________________________________________________________________
 
-* Copy and paste public ip address and port 5000 (this port is necessary for Nginx and we added in the nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:5000>
+* Copy and paste public ip address and port 8000 (this port is necessary for Nginx and we added in the Nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:8000>
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/urlshortener.jpg)
@@ -398,7 +399,7 @@ __________________________________________________________________
 
 &emsp;&emsp;&emsp;&emsp;		For my CloudWatch alarm, I chose to measure the **CPU User Usage** and set the alarm to notify me when the usage gets over 75% and adjusted the percentage to assess the notification process. I saw that the CPU usage went all the way up to 80% after rebuilding the application in Jenkins due to all  the processing power that its using to complete so many different tasks at once.
 
-&emsp;&emsp;&emsp;&emsp;			After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance because my usual t2.micro instance would not have been able to manage all the installations I added to it. For the long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
+&emsp;&emsp;&emsp;&emsp;			After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance because my usual t2.micro instance would not have been able to manage all the installations I added to it. For the long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and infrastructure scalability. 
 
 
 _____________________________________________
