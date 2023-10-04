@@ -1,4 +1,4 @@
-## <ins>Deployment 4: Using AWS VPC & EC2 instance for Jenkins Staging & Gunicorn Production </ins>
+## <ins>Deployment 4: Using AWS VPC & EC2 instance for Jenkins Staging & Gunicorn Production Environments </ins>
 _________________________________________________
 ##### Danielle Davis
 ##### October 2, 2023
