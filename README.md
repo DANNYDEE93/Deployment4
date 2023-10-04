@@ -342,13 +342,13 @@ __________________________________________________________________________
 
 __________________________________________________________________________
 
-* Copy and paste public ip address and port 8000 (this port is necessary for Nginx and we added in the Nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:8000>
+* Copy and paste public ip address and port 8000 (this port is necessary to access Gunicorn server) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:8000>
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/urlshortener.jpg)
 
 
-* Nginx acts as a load balancer and reverse proxy server/middleman between the EC2 instance and the web application. It creates a level of security by buffering requests and only allowing necessary responses from the backend. This also handles traffic from overloading the web application server.
+* Nginx acts as a reverse proxy server/middleman between the EC2 instance and the web application. It creates a level of security by buffering requests and only allowing necessary responses from the backend. This also handles traffic from overloading the web application server.
 * Gunicorn, installed with the code in our application code, acts as a proxy server running on port 8000 adding into the configuration file in Nginx. Gunicorn was installed in the application code changes I made in the Jenkinsfile. The flask application uses python with Gunicorn to create a framework or translation of the python function calls into HTTP responses so that Gunicorn can access the endpoint which was the application URL.
 
    
