@@ -35,11 +35,12 @@ __________________________________________________________________________
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4remoterepo.jpg)
 _______________________________________________________________________
 
-&emsp;&emsp;&emsp;&emsp;		Below are important additions that I changed in the Jenkinsfile to include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependecies for  Gunicorn with the Flask application to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
+<ins> **Additions to Jenkinsfile through VS code editor** </ins>
+&emsp;&emsp;&emsp;&emsp;		The changes include the dependencies to sustain the virtual environment for the build stage, saves the test stage results, deletes old builds and running processes attached to them. The script also installs dependecies for  Gunicorn with the Flask application to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
 
 _______________________________________________________________________________________-
 
-stage ('Build') {
+* stage ('Build') {
 steps {
 sh '''#!/bin/bash
 python3 -m venv test3
@@ -50,7 +51,7 @@ export FLASK_APP=application
 
 ________________________________________________
 
-stage ('test') {
+* stage ('test') {
 steps {
 sh '''#!/bin/bash
 source test3/bin/activate
@@ -63,7 +64,7 @@ junit 'test-reports/results.xml'
 }
 __________________________________________________________
 
-stage ('Clean') {
+* stage ('Clean') {
 steps {
 sh '''#!/bin/bash
 if [[ $(ps aux | grep -i "gunicorn" | tr -s " " | head -n 1 | cut -d " " -f 2) != 0 ]]
@@ -75,7 +76,7 @@ fi
 '''
 __________________________________________________________________________
 
-stage ('Deploy') {
+* stage ('Deploy') {
 steps {
 keepRunning {
 sh '''#!/bin/bash
@@ -93,7 +94,7 @@ _______________________________________________________________________
 
 
 
-Below is a git commit timeline to keep track of the changes made in my application files for deployment:
+<ins> **Below is a git commit timeline to keep track of the changes made in my application files for deployment:** </ins>
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/gitCommitTimeline.jpg)
@@ -124,13 +125,17 @@ __________________________________________________________________________
 
 <ins> Run commands in EC2 terminal to download newest versions and packages:</ins>
 
-   **sudo apt update** --> *[update system and checks for upgrades]*
+*#update system and checks for upgrades*
+**sudo apt update** 
 
-   **sudo apt upgrade** -->*[upgrade any applications that need upgrading]
+*#upgrade any applications that need upgrading*
+  **sudo apt upgrade** 
 
-   **sudo apt install python3.10-venv** *[for the python virtual environment]* -->
+*#for the python virtual environment*
+**sudo apt install python3.10-venv** 
 
-   **sudo apt install python3-pip** *[includes the dependencies needed for the packages being installed]* -->
+*#includes the dependencies needed for the packages being installed*
+**sudo apt install python3-pip** 
 
 ______________________________________________________________________________________
 
@@ -157,7 +162,8 @@ __________________________________________________________________________
 
 **sudo systemctl start jenkins.service**
 
-**sudo systemctl status jenkins** *[checks that jenkins package is actively running on EC2 before you run your build through the jenkins web browser later on]*
+*#checks that jenkins package is actively running on EC2 before you run your build through the jenkins web browser later on*
+**sudo systemctl status jenkins** 
 
 * If you have previous installed packages for Jenkins, you will need to remove any and all files with the **rm command** and run *sudo apt clean** to clear your cached history before trying to install a new version of Jenkins and for it to work.
 
@@ -193,14 +199,12 @@ _______________________________________________________________________
 
 * Use **sudo chmod 777 default** to give permissions to write into file
 
-
-
-**First change the port from 80 to 5000 to use this in another browser to deploy my web application :**
+**First change the port from 80 to 5000 so that HTTP requests can be heard on port 5000 through the Nginx reverse proxy server and Flask can be utilized for Gunicorn to deploy application:**
 server {
 listen 5000 default_server;
 listen [::]:5000 default_server;
 
-**Now scroll down to where you see “location” and replace with the text below:**
+**Now scroll down to where you see “location” and replace with the text below so that requests are forwarded to port 8000 for the Gunicorn proxy server  :**
 location / {
 proxy_pass http://127.0.0.1:8000;
 proxy_set_header Host $host;
@@ -234,16 +238,16 @@ ____________________________________________________________________________
 
 **sudo apt update**
 
-#download link for cloudwatch agent compatability with Ubuntu OS system
+*#download link for cloudwatch agent compatability with Ubuntu OS system*
 **wget https://amazoncloudwatch-agent.s3.amazonaws.com/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb** 
 
-#download Debian package on the server that is being run on Linux
+*#download Debian package on the server that is being run on Linux*
 **sudo dpkg -i -E ./amazon-cloudwatch-agent.deb**
 
-#change to directory containing package with cloudwatch agent and other files needed to work on instance
+*#change to directory containing package with cloudwatch agent and other files needed to work on instance*
 **cd /opt/aws/amazon-cloudwatch-agent/bin/**
 
-#use configuration manager,that comes with AWS cloudwatch as a service so that we don't have to configure the package manually
+*#use configuration manager,that comes with AWS cloudwatch as a service so that we don't have to configure the package manually*
 **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard** 
 
 *You should see the configuration manager open up*
@@ -254,11 +258,11 @@ ________________________________________________________________________________
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchagent.jpg)
 
  
-</ins> Answer the questions pertaining to the configurations of your EC2: </ins>
+</ins> **Answer the questions pertaining to the configurations of your EC2:** </ins>
 
 *For the conditions of CloudWatch agent, I chose:* 
 
-Linux --> EC2 --> root user --> 
+* Linux --> EC2 --> root user --> 
 **Select** No for 'StatsD daemon' and 'CollectD' [monitoring processing tools] --> 
 
 **Yes** to monitor host metrics such as CPU and memory --> 
@@ -267,26 +271,25 @@ Linux --> EC2 --> root user -->
 
 **Yes**to aggregate EC2 dimensions -->  
 
-Select for metrics to be collected every 20 -60 seconds --> 
+* Select for metrics to be collected every 20 -60 seconds --> 
 
-Select **2** for standard configuration of our json output file where cloudwatch agent is being confiugred on --> 
+* Select **2** for standard configuration of our json output file where cloudwatch agent is being confiugred on --> 
 
-Select **Yes** to accept the configuration provided (you can select **no** to edit the configurarion or change the file later) --> 
+* Select **Yes** to accept the configuration provided (you can select **no** to edit the configurarion or change the file later) --> 
 
-Select **No** to having any existing CloudWatch Log Agent --> 
+* Select **No** to having any existing CloudWatch Log Agent --> 
 
-Select **Yes** to monitor log files --> Provide path to log files: **/var/logs/syslog** --> Enter to accept path default --> Enter to accept default stream name or change it --> Select the number of logs you want to be saved in a day which will allocate the necessary time for the instance to relay and collect these logs in a day. [Log files can be long so choose a number that your instance can handle] --> Add or ignore any other log files you may or may not want to collect --> 
+* Select **Yes** to monitor log files --> Provide path to log files: **/var/logs/syslog** --> Enter to accept path default --> Enter to accept default stream name or change it --> Select the number of logs you want to be saved in a day which will allocate the necessary time for the instance to relay and collect these logs in a day. [Log files can be long so choose a number that your instance can handle] --> Add or ignore any other log files you may or may not want to collect --> 
 
-* Note: Since I do not have permission to give AWS permission to write to my log files, I wasn't able to see my config file for the cloudwatch 		agent in my AWS account but it is saved in my instance and I can still utilize CloudWatch. If you have permission for PUT parameter in your AWS 	account, you can continue:
+&emsp;&emsp;&emsp;&emsp;	*Note:* Since I do not have permission to give AWS permission to write to my log files, I wasn't able to see my config file for the cloudwatch agent in my AWS account but it is saved in my instance and I can still utilize CloudWatch. If you have permission for PUT parameter in your AWS 	account, you can continue:
 
-Click **Yes** to store the JSON config file in the SSM parameter (this is possible because of the PUT parameter or write capability given 		in the Admin policy in the role created for the cloudwatch agent --> 
+* Click **Yes** to store the JSON config file in the SSM parameter (this is possible because of the PUT parameter or write capability given 		in the Admin policy in the role created for the cloudwatch agent --> 
 
-Press **Enter** to accept default of parameter store name [AmazonCloudWatch-linux], default region that the virtual server of the 			instance was launched in [us-east-1]--> 
+* Press **Enter** to accept default of parameter store name [AmazonCloudWatch-linux], default region that the virtual server of the 			instance was launched in [us-east-1]--> 
 
 **Choose or Enter** AWS credential that should be used to send the config file to the parameter store --> Program should exit now
 
-
-* You should be at this path in the instance still:  **/opt/aws/amazon-cloudwatch-agent/bin/** --> if you press **ls** you should see the config file that we just generated, sent to the parameter store, and stored onto our EC2 instance.
+* *You should be at this path in the instance still:*  **/opt/aws/amazon-cloudwatch-agent/bin/** --> if you press **ls** you should see the config file that we just generated, sent to the parameter store, and stored onto our EC2 instance.
   
 * Run command: **sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json** to process the amazon cloudwatch agent
 
@@ -311,15 +314,15 @@ ______________________________________________________________________________
 
 * Go to **New Item** on the Dashboard --> Name project --> Select **Multibranch pipeline** --> Go to **Branch Sources** --> Select **GitHub** under credentials --> Add **Jenkins** [multibranch pipeline allows the implementation of different Jenkins files for different branches of the same project which you will need for later steps in this process where I update my Jenkins file in my repo]
 
-You will be prompted to enter your GitHub credentials to connect GitHib repo and follow steps to make token on GitHub for Jenkins credential password. 
+*You will be prompted to enter your GitHub credentials to connect GitHib repo and follow steps to make token on GitHub for Jenkins credential password.* 
 
 *Switch back to GitHub. Copy and paste repo URL into "Repository line" in Jenkins.*
 
-</ins> Create token for Jenkins using GitHub account: </ins>
+</ins> **Create token for Jenkins using GitHub account:** </ins>
 
-   Go back to your GitHub and press profile picture/icon --> Select Settings--> Developer Settings--> Personal Access Tokens--> Tokens(classic) --> 	Select scopes: repo and admin repo to give full access to repository --> Generate new token (classic)--> Sign into GitHub if prompted --> Copy 		and paste token into password line in Jenkins [the token is for added security and authorization and to connect GitHub repo with Jenkins to scan 	and test build for application]
+* Go back to your GitHub and press profile picture/icon --> Select Settings--> Developer Settings--> Personal Access Tokens--> Tokens(classic) --> 	Select scopes: repo and admin repo to give full access to repository --> Generate new token (classic)--> Sign into GitHub if prompted --> Copy 		and paste token into password line in Jenkins [the token is for added security and authorization and to connect GitHub repo with Jenkins to scan 	and test build for application]
 
-   Scan repository Now to test build --> Select **Build History** to view console output with git commands and pipeline stage process --> Pass staging environment in Jenkins before proceeding --> Check **console output** responses and check the phases of the staging environment.
+* Scan repository Now to test build --> Select **Build History** to view console output with git commands and pipeline stage process --> Pass staging environment in Jenkins before proceeding --> Check **console output** responses and check the phases of the staging environment.
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4jenkinsbuild.jpg)
 
@@ -330,19 +333,12 @@ __________________________________________________________________________
 
 __________________________________________________________________________
 
-Copy and paste public ip address and port 5000 (this port is necessary for nginx and we added in the nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:5000>
+* Copy and paste public ip address and port 5000 (this port is necessary for nginx and we added in the nginx config file) in a new browser to run the deployment through the nginx extension that we installed on the server <ip_address:5000>
 
 
-__________________________________________________________________________
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/urlshortener.jpg)
 
 
-If you try to do this step, you will see that it doesn't work because we did not add port 5000 on the security group that we added to the EC2 instance. 
-
-Go to **security group** created for the instance --> Add Port 5000 and re-try Step 16.
-
-The web application should be available now 
-
-************************************************************************
 
 
 __________________________________________________________________________
@@ -352,46 +348,68 @@ __________________________________________________________________________
 __________________________________________________________________________
 
 
-</ins> To create an alarm using the Amazon EC2 console: </ins>
+</ins> **To create a CloudWatch alarm using the Amazon EC2 console:** </ins>
   
 
-Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance you want alarms for --> Information should be filled out for the most part --> Modify **Statistic** and **Period** for what metric you want to be notified about and the period time that the metric is being measured --> Press **Select Metrics**
+* Go to Cloudwatch --> Go to 'in alarm' --> **Create alarm** --> Click instance you want alarms for --> Information should be filled out for the most part --> Modify **Statistic** and **Period** for what metric you want to be notified about and the period time that the metric is being measured --> Press **Select Metrics**
 
-Under **Conditions**, select when conditions that the instance needs to meet in order for you to recieve a notification 
- 
-   For Alarm thresholds, select the metric and criteria for the alarm. You can leave the default settings for selections or customize   Group samples by (Average) and Type of data to sample (CPU utilization). For Alarm when, choose >= and enter 0.80. For Consecutive period, enter 1. For Period, select 5 minutes --> Press **Next**
+* Under **Conditions**, select when conditions that the instance needs to meet in order for you to recieve a notification --> For Alarm thresholds, select the metric and criteria for the alarm. You can leave the default settings for selections or customize Group samples and Type of data. For Alarm when, choose threshold %, for period: the amount of time you want the metrics to be measured --> Press **Next**
 
-Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
+* Select **In alarm** --> Create a new topic: **Name topic** or select default for SNS connection --> Enter **email address** under email endpoints --> **Create topic** --> Press **Next** --> Fill out name and description --> Press *Next** --> Go over configurations for alarm --> **Create alarm**
+
+* Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms. --> Select alarm to attach alarm to EC2 instance running applications for deployment.
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchconfig.jpg)
 
 
-Select the instance and choose Actions, Monitor and troubleshoot, Manage CloudWatch alarms. --> Select alarm 
-
+</ins> **Test CloudWatch alarm:** </ins>
  
-Do a stress test in the terminal by installing: **sudo apt install stress -ng** [This command helps test the functionality by directing simulated 	trafic to the instance and seeing if it can handle it, as well as, test if my alarm is working.]
+* Do a stress test in the terminal by installing: **sudo apt install stress -ng** [This command helps test the functionality by directing simulated 	trafic to the instance and seeing if it can handle it, as well as, test if my alarm is working.]
  	
-  Then run: **sudo stress-ng --matrix 1 -t 1m** [to test the durability of the instance that is hosting applications needed for my deployment] This command does a 1 minute test but you can change the amount of time as needed. Since I have already configured an alarm for this instance, I recieved an email notification that it was in a state of **'in Alarm'**. This would prompt me to go to my instance and check on its processes and see if there are any configurations that need tobe done to ensure the proper functionality of my deployment. 
+* Then run: **sudo stress-ng --matrix 1 -t 1m** [to test the durability of the instance that is hosting applications needed for my deployment] This command does a 1 minute test but you can change the amount of time as needed. Since I have already configured an alarm for this instance, I recieved an email notification that it was in a state of **'in Alarm'**. This would prompt me to go to my instance and check on its processes and see if there are any configurations that need tobe done to ensure the proper functionality of my deployment. 
+
+* Recieved email and easily accessed alarm metrics since we added it to the Dashboard
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/dep4cloudwatchnotify.jpg)
 
 
-Recieved email and easily accessed alarm metrics since we added it to the Dashboard
+______________________________________________________________________________
 
+### <ins>RE-BUILD & DEPLOY:</ins>
+__________________________________________________________________
+
+
+
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/rebuild%26alarm.jpg)
+
+&emsp;&emsp;&emsp;&emsp;			 As I explained above in my **Issues** section and **Step 9**, I had to rebuild my staging environment in Jenkins in order for my application to deploy. Re-running the build in Jenkins ensured that all changes and dependencies were refreshed and updated,  as well as that the cache history was cleared out old builds. Most importantly, it ensures a greater level of optimization because by testing in Jenkins, I am able to identify any errors in the code before pushing the build to the production environment.
+
+&emsp;&emsp;&emsp;&emsp;			 For my CloudWatch alarm, I chose to measure the **Cpu User Usage** and set the alarm to notify me when the usage gets over 75% and adjusted the percentage to test it out. I saw that the cpu usage went all the way up to 80% after rebuilding in Jenkins due to all  the processing power that its using to complete so many different tasks at once.
+
+&emsp;&emsp;&emsp;&emsp;			After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance becuase my usual t2.micro instance would not have been able to handle all the installations I added to it. For long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
+
+
+_____________________________________________
 
 ### <ins>SYSTEM DIAGRAM:</ins>
+_________________________________________________
 
 
-![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/deployment4Diagram.jpg)
+![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/newdep4.jpg)
 
-
+_________________________________________________
 
 ### <ins>OPTIMIZATION:</ins>
-___________________
-&emsp;&emsp;&emsp;&emsp;	After running my Jenkins build a few times and installing all the applications on my EC2 instance, it had some connectivity issues. It was performing at a slower pace but still worked well enough for my deployment. Luckily, I used a t2.medium EC2 instance becuase my usual t2.micro instance would not have been able to handle all the installations I added to it. For long term, I would need to eventually switch to an instance with a larger capacity just in case I need to install additional applications or perform more complicated processes. This issue is important to note especially for understanding business needs and the scalability of their business infrastructure. 
+_____________________________________________
+Jenkins was very important in the optimization and error handling for the deployment. Below are some ways I could have had better optimization with my deployment:
 
-*For the future, you can auto scale or create ec2 actions so that in case certain metrics reach a specifiec threshold in the alarm, the instance can perform an action to intervene with any issues that may occur*
+*	Using a webhook to integrate the changes and automatically trigger the rebuild in Jenkins to make sure the proxy server is up and running for the web application to work properly.
+*	
+<ins> **Lowering the processing power:** </ins>
+
+*	Configuring another EC2 to split up the processing power that my t2 medium EC2 instance was having a trouble with handling. My EC2 is running very slow now and having connectivity issues for my application and is in danger of shutting down if I have to make more configuration to my coding or have to add more applications to the instance. 
+*	Automating the action of turning on a back up EC2 instance or auto scaling in the CloudWatch alarms setting when memory and cpu utilization went above 25-50%. This gives me security around the functioning of my applications installed on the server because I have a back up plan before my EC2 is in any more danger of shutting down. 
 	
 	
