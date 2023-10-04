@@ -34,7 +34,7 @@ ______________________________________________________________________________
 ### Step 2: Git commits
 __________________________________________________________________________
 
-* I used git code through remote repository in VS code provisioned on a separate instance and make changes in the Jenkinsfile in a second branch to double check the changes before adding, committing, and pushing those changes to my local repository on Github.
+* I used git code through remote repository in VS code provisioned on a separate instance and made changes to the Jenkinsfile in a second branch to double check the changes before adding, committing, and pushing those changes to my local repository on Github.
   
 * Add GitHub URL in config file to give code editor permission to update my local repo. 
 
@@ -44,7 +44,7 @@ _______________________________________________________________________
 
 <ins> **Additions to Jenkinsfile through VS code editor** </ins>
 
-The changes I made to the Jenkinsfile includes the dependencies to sustain the virtual environment for the build stage, saves the test stage results, and deletes old builds and running processes attached to them. The script also installs dependencies for Gunicorn and Flask applications to run as a HTTP web server that runs python applications. The web server can then run as a daemon or an automated dormant background process to handle client requests when necessary preventing the server from getting overwhelmed.
+The changes I made to the Jenkinsfile includes the dependencies to sustain the virtual environment for the build stage, save the test stage results, and delete old builds and running processes attached to them. The script also installs dependencies for Gunicorn and Flask applications to run as a HTTP web server that runs python applications. The Gunicorn server can then run as a daemon or an automated dormant background process to handle client requests when necessary, preventing the server from getting overwhelmed.
 
 ____________________________________________________________________________
 
