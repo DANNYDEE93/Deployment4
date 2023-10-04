@@ -93,7 +93,7 @@ _______________________________________________________________________
 
 
 
-Below is a git commit timeline to keep track of the changes made in my aaplication files for deployment:
+Below is a git commit timeline to keep track of the changes made in my application files for deployment:
 
 
 ![](https://github.com/DANNYDEE93/Deployment4/blob/main/static/gitCommitTimeline.jpg)
@@ -191,6 +191,10 @@ _______________________________________________________________________
 
 </ins> **Edit** the configuration file and **cd** & **nano** into default file through the following path: "/etc/nginx/sites-enabled/default" </ins>
 
+* Use **sudo chmod 777 default** to give permissions to write into file
+
+
+
 **First change the port from 80 to 5000 to use this in another browser to deploy my web application :**
 server {
 listen 5000 default_server;
@@ -212,7 +216,7 @@ ______________________________________________________________________
 
 __________________________________________________________________________
 
-</ins> [Before installing, need to attach permissions to AWS so that cloudwatch can be used on instance:] </ins>
+</ins> [Before installing, need to attach permissions to AWS so that cloudwatch can be used on my instance:] </ins>
 	
 **Go to IAM Roles** --> **Create** IAM roles, Trusted entity type: **AWS service** --> Use case: EC2, **Next**
 	
