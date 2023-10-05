@@ -421,4 +421,4 @@ Jenkins was particularly important in the optimization and error handling for th
 <ins> **Lowering the processing power:** </ins>
 
 *	Configuring another EC2 to split up the processing power that my t2 medium EC2 instance was having trouble with handling. My EC2 is running slow now and having connectivity issues for my application and is in danger of shutting down if I have to make more configuration to my coding or have to add more applications to the instance. 
-*	Automating the action of turning on a backup EC2 instance or auto scaling in the CloudWatch alarms setting when memory and CPU utilization went above 25-50%. This gives me security around the functioning of my applications installed on the server because I have a backup plan before my EC2 is in any more danger of shutting down. 
+*	Automating the action of turning on a backup EC2 instance or horizontal auto scaling when the CloudWatch alarms settings when memory and CPU utilization went above 25-50%. This gives me security around the functioning of my applications installed on the server because I have a backup plan before my EC2 is in any more danger of shutting down. 
